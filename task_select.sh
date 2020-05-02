@@ -139,7 +139,7 @@ else
 					printf "\n\nType in the path of the device you want to dismount: "
 					tput setaf 2; read device_path; tput sgr0
 					sudo umount $device_path
-					printf "\nThe command was: sudo mount ${device_path}"
+					printf "\nThe command was: sudo umount ${device_path}"
 				else
 					printf "Something went wrong"
 					printf "\n   mount_choice = ${mount_choice}\n"
