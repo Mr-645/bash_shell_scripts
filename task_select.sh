@@ -134,12 +134,12 @@ else
 					printf "\nType in the path of the directory you want to mount it to: "
 					tput setaf 2; read mount_path; tput sgr0
 					sudo mount $device_path $mount_path
-					print "\nThe command was: sudo mount ${device_path} ${mount_path}"
+					printf "\nThe command was: sudo mount ${device_path} ${mount_path}"
 				elif [ "$mount_choice" = "u" ]; then
 					printf "\n\nType in the path of the device you want to dismount: "
 					tput setaf 2; read device_path; tput sgr0
 					sudo umount $device_path
-					print "\nThe command was: sudo mount ${device_path}"
+					printf "\nThe command was: sudo mount ${device_path}"
 				else
 					printf "Something went wrong"
 					printf "\n   mount_choice = ${mount_choice}\n"
