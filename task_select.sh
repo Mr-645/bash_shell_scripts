@@ -1,5 +1,6 @@
 #!/bin/bash
-# This script is for running pre-made bash commands, version 0.0.4
+# This script is for running pre-made bash commands
+version=0.0.5
 
 # This is how you execute this script remotely: ssh user@remote_server "$(< localfile)"
 # Replace "localfile" with "Documents/task_select.sh"
@@ -8,15 +9,24 @@
 # https://unix.stackexchange.com/questions/293604/bash-how-to-make-each-menu-selections-in-1-line-instead-of-multiple-selections
 # https://stackoverflow.com/questions/35769054/bash-mint-how-to-add-a-newline-to-a-ps3-prompt
 
+# TERMINAL TEXT COLOUR help
+# http://www.linuxcommand.org/lc3_adv_tput.php
+# https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
 
 COLUMNS=30
-PS3=$'\n'"Please enter the number corresponding to your choice of operation: "
-options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "Apt update" "Task manager" "Ports" "ip address" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Suspend" "Quit")
+PS3=$'\n'"Please enter the number corresponding to the operation of your choice: "
+options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Suspend" "Quit")
 
 if  [[ $1 = "--help" ]]; then
-    printf "\nThis script is for running pre-made bash commands\n\n"
+    printf "This script is for running pre-made bash commands\n"
+	printf "$(tput rev)Usage: ./task_select [Options]$(tput sgr0)\n\n"
+	printf "Options:\n"
+	printf " -v\tprint version number and 'about' info\n"
+elif [[ $1 = "-v" ]]; then
+	printf "Script name: Task select\nAuthor: https://github.com/Mr-645/ \nVersion number: ${version}\n"
 else
-	printf "\nSelect operation from the list below\n\n"
+	printf "$Suffix command with '--help' for more info"
+	printf "\n$(tput smso)Select an operation from the list below$(tput sgr0)\n\n"
 	select opt in "${options[@]}"
 	do
 		case $opt in
@@ -106,9 +116,52 @@ else
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
-			"Apt update")
+			"Mount a device")	
+				printf "\n$(tput setaf 6)$(tput smul)Here are the connected devices$(tput sgr0)\n\n"
+				#tput setaf 7; tput setab 1
+				tput setaf 3; tput rev
+				sudo blkid
 				printf "\n"
-				sudo apt-get update
+				sudo lsblk
+				tput sgr0
+				
+				printf "\nMount [m], or un-mount [u]?... "
+				tput setaf 2; read mount_choice; tput sgr0
+					
+				if [ "$mount_choice" = "m" ]; then
+					printf "\n\nType in the path of the device you want to mount: "
+					tput setaf 2; read device_path; tput sgr0
+					printf "\nType in the path of the directory you want to mount it to: "
+					tput setaf 2; read mount_path; tput sgr0
+					sudo mount $device_path $mount_path
+					print "\nThe command was: sudo mount ${device_path} ${mount_path}"
+				elif [ "$mount_choice" = "u" ]; then
+					printf "\n\nType in the path of the device you want to dismount: "
+					tput setaf 2; read device_path; tput sgr0
+					sudo umount $device_path
+					print "\nThe command was: sudo mount ${device_path}"
+				else
+					printf "Something went wrong"
+					printf "\n   mount_choice = ${mount_choice}\n"
+				fi
+				
+				printf "\nOperation '$REPLY: $opt' is complete\n"
+				break
+				;;
+			"Apt update/upgrade")
+				printf "\nJust update repositories [d]? Or update, and upgrade system pakcages [g]?... "
+				read update_choice
+				printf "\n"
+				
+				if [ "$update_choice" = "d" ]; then
+					sudo apt update
+				elif [ "$update_choice" = "g" ]; then
+					sudo apt update && sudo apt upgrade
+				else
+					printf "Something went wrong"
+					printf "\n   update_choice = ${update_choice}\n"
+				fi
+				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
