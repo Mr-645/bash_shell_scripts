@@ -140,6 +140,7 @@ else
 					tput setaf 2; read device_path; tput sgr0
 					sudo umount $device_path
 					printf "\nThe command was: sudo umount ${device_path}"
+					tput setaf 3; tput rev; sudo lsblk; tput sgr0
 				else
 					printf "Something went wrong"
 					printf "\n   mount_choice = ${mount_choice}\n"
