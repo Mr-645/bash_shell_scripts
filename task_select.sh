@@ -36,14 +36,14 @@ else
 				read search_param
 				printf "File name contains following string... "
 				read name_string
-				printf "File extension (e.g. [txt])... "
+				printf "File extension (e.g. [.txt]), {leave blank by pressing enter}... "
 				read file_ext
 				main_string="find"
 				
 				if [ "$search_param" = "w" ]; then
-					main_string="sudo ${main_string} / -name '*${name_string}*.${file_ext}'"
+					main_string="sudo ${main_string} / -name '*${name_string}*${file_ext}'"
 				elif [ "$search_param" = "c" ]; then
-					main_string="${main_string} . -name '*${name_string}*.${file_ext}'"
+					main_string="${main_string} . -name '*${name_string}*${file_ext}'"
 				else
 					printf "\nSomething went wrong"
 					printf "\n   search_param = ${search_param}"
