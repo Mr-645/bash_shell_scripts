@@ -15,7 +15,7 @@ version=0.0.5
 
 COLUMNS=30
 PS3=$'\n'"Please enter the number corresponding to the operation of your choice: "
-options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Suspend" "Quit")
+options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Suspend" "Quit")
 
 if  [[ $1 = "--help" ]]; then
     printf "This script is for running pre-made bash commands\n"
@@ -116,7 +116,7 @@ else
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
-			"Mount a device")	
+			"un/Mount a device")	
 				printf "\n$(tput setaf 6)$(tput smul)Here are the connected devices$(tput sgr0)\n\n"
 				#tput setaf 7; tput setab 1
 				tput setaf 3; tput rev
@@ -125,7 +125,7 @@ else
 				sudo lsblk
 				tput sgr0
 				
-				printf "\nMount [m], or un-mount [u]?... "
+				printf "\nMount [m], un-mount [u], or cancel [c]?... "
 				tput setaf 2; read mount_choice; tput sgr0
 					
 				if [ "$mount_choice" = "m" ]; then
@@ -142,6 +142,8 @@ else
 					sudo umount $device_path
 					printf "\nThe command was: sudo umount ${device_path}\n"
 					tput setaf 3; tput rev; sudo lsblk; tput sgr0
+				elif [ "$mount_choice" = "c" ]; then
+					tput sgr0
 				else
 					printf "Something went wrong"
 					printf "\n   mount_choice = ${mount_choice}\n"
