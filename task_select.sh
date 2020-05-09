@@ -25,7 +25,7 @@ if  [[ $1 = "--help" ]]; then
 elif [[ $1 = "-v" ]]; then
 	printf "Script name: Task select\nAuthor: https://github.com/Mr-645/ \nVersion number: ${version}\n"
 else
-	printf "$Suffix command with '--help' for more info"
+	printf "\nSuffix command with '--help' for more info"
 	printf "\n$(tput smso)Select an operation from the list below$(tput sgr0)\n\n"
 	select opt in "${options[@]}"
 	do
