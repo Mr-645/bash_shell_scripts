@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script is for running pre-made bash commands
-version=0.0.5
+version=0.0.6
 
 # This is how you execute this script remotely: ssh user@remote_server "$(< localfile)"
 # Replace "localfile" with "Documents/task_select.sh"
@@ -55,7 +55,7 @@ else
 				printf "\n================ Output START ================\n"
 				eval $main_string
 				printf "================ Output END ================\n"
-				printf "\n---Command was->        ${main_string}"
+				printf "\nThe command was: ${main_string}"
 				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
@@ -67,16 +67,19 @@ else
 				
 				if [ "$kernel_choice" = "s" ]; then
 					uname -a
+					printf "\nThe command was: uname -a"
 				elif [ "$kernel_choice" = "r" ]; then
 					dmesg
+					printf "\nThe command was: dmesg"
 				elif [ "$kernel_choice" = "k" ]; then
 					printf "Enter keyword/string... \n"
 					read ker_sea_str
 					printf "\n\n"
 					dmesg | grep $ker_sea_str
+					printf "\nThe command was: dmesg | grep ${ker_sea_str}"
 				else
 					printf "Something went wrong"
-					printf "\n   kernel_choice = ${kernel_choice}\n"
+					printf "\nkernel_choice = ${kernel_choice}\n"
 				fi
 				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
@@ -89,11 +92,13 @@ else
 				
 				if [ "$device_choice" = "u" ]; then
 					lsusb
+					printf "\nThe command was: lsusb"
 				elif [ "$device_choice" = "b" ]; then
 					lsblk
+					printf "\nThe command was: lsblk"
 				else
 					printf "Something went wrong"
-					printf "\n   device_choice = ${device_choice}\n"
+					printf "\ndevice_choice = ${device_choice}\n"
 				fi
 				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
@@ -106,11 +111,13 @@ else
 				
 				if [ "$disc_comp_choice" = "s" ]; then
 					df -ah
+					printf "\nThe command was: df -ah"
 				elif [ "$disc_comp_choice" = "e" ]; then
 					sudo fdisk -l
+					printf "\nThe command was: sudo fdisk -l"
 				else
 					printf "Something went wrong"
-					printf "\n   disc_comp_choice = ${disc_comp_choice}\n"
+					printf "\ndisc_comp_choice = ${disc_comp_choice}\n"
 				fi
 				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
@@ -146,7 +153,7 @@ else
 					tput sgr0
 				else
 					printf "Something went wrong"
-					printf "\n   mount_choice = ${mount_choice}\n"
+					printf "\nmount_choice = ${mount_choice}\n"
 				fi
 				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
@@ -159,11 +166,13 @@ else
 				
 				if [ "$update_choice" = "d" ]; then
 					sudo apt update
+					printf "\nThe command was: sudo apt update"
 				elif [ "$update_choice" = "g" ]; then
 					sudo apt update && sudo apt upgrade
+					printf "\nThe command was: sudo apt update && sudo apt upgrade"
 				else
 					printf "Something went wrong"
-					printf "\n   update_choice = ${update_choice}\n"
+					printf "\nupdate_choice = ${update_choice}\n"
 				fi
 				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
@@ -172,18 +181,21 @@ else
 			"Task manager")
 				printf "\n"
 				htop
+				printf "\nThe command was: htop"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
 			"Ports")
 				printf "\n"
 				sudo netstat -tulpn
+				printf "\nThe command was: sudo netstat -tulpn"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
 			"ip address")
 				printf "\n"
 				ip addr
+				printf "\nThe command was: ip addr"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
@@ -192,6 +204,7 @@ else
 				printf "Enter name of package in repositories... \n"
 				read pak_name
 				apt search $pak_name
+				printf "\nThe command was: apt search ${pak_name}"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
@@ -200,7 +213,7 @@ else
 				printf "Enter installed package name... \n"
 				read pak_name
 				dpkg -s $pak_name
-				
+				printf "\nThe command was: dpkg -s ${pak_name}"
 				printf "\nGo to its launcher location? [y] or [n]... "
 				read gtd
 				
@@ -212,7 +225,7 @@ else
 					printf "\nOperation '$REPLY: $opt' is complete\n"
 				else
 					printf "Something went wrong"
-					printf "\n   gtd = ${gtd}\n"
+					printf "\ngtd = ${gtd}\n"
 				fi
 				
 				break
@@ -224,9 +237,11 @@ else
 				printf "\n ________LIST START________ \n\n"
 				dpkg --list $pak_name
 				printf "\n ________LIST END________ \n\n"
+				printf "\nThe command was: dpkg --list ${pak_name}"
 				printf "\n ________LIST FILES START________ \n\n"
 				dpkg --listfiles $pak_name
 				printf "\n ________LIST FILES END________ \n"
+				printf "\nThe command was: dpkg --listfiles ${pak_name}"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
@@ -237,11 +252,13 @@ else
 				
 				if [ "$package_comp_choice" = "s" ]; then
 					apt list --installed
+					printf "\nThe command was: apt list --installed"
 				elif [ "$package_comp_choice" = "e" ]; then
 					dpkg -l
+					printf "\nThe command was: dpkg -l"
 				else
 					printf "Something went wrong"
-					printf "\n   package_comp_choice = ${package_comp_choice}\n"
+					printf "\npackage_comp_choice = ${package_comp_choice}\n"
 				fi
 				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
@@ -254,19 +271,23 @@ else
 				
 				if [ "$service_choice" = "a" ]; then
 					systemctl list-units --type=service -all
+					printf "\nThe command was: systemctl list-units --type=service -all"
 				elif [ "$service_choice" = "c" ]; then
 					systemctl list-units --type=service
+					printf "\nThe command was: systemctl list-units --type=service"
 				elif [ "$service_choice" = "l" ]; then
 					printf "Enter keyword/string corresponding to service... \n"
 					read ser_name
 					systemctl list-units --type=service -all | grep $ser_name
+					printf "\nThe command was: systemctl list-units --type=service -all | grep ${ser_name}"
 				elif [ "$service_choice" = "s" ]; then
 					printf "Enter keyword/string corresponding to service... \n"
 					read ser_name
 					systemctl list-units --type=service | grep $ser_name
+					printf "\nThe command was: systemctl list-units --type=service | grep ${ser_name}"
 				else
 					printf "Something went wrong"
-					printf "\n   service_choice = ${service_choice}\n"
+					printf "\nservice_choice = ${service_choice}\n"
 				fi
 				
 				printf "\nOperation '$REPLY: $opt' is complete\n"
@@ -274,6 +295,7 @@ else
 				;;
 			"Suspend")
 				printf "\nGoing to sleep now\n"
+				printf "\nThe command was: sudo systemctl suspend"
 				sudo systemctl suspend
 				break
 				;;
