@@ -13,6 +13,13 @@ version=0.0.6
 # http://www.linuxcommand.org/lc3_adv_tput.php
 # https://stackoverflow.com/questions/5947742/how-to-change-the-output-color-of-echo-in-linux
 
+# Cool GUI in the shell
+# Go and learn about "dialog" menus in bash.
+# http://www.unixcl.com/2009/12/linux-dialog-utility-short-tutorial.html
+
+# Ncurses bash tutorial
+# https://www.youtube.com/watch?v=A_QErp5C-z0
+
 COLUMNS=30
 PS3=$'\n'"Please enter the number corresponding to the operation of your choice: "
 options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Suspend" "Quit")
