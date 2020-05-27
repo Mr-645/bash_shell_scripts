@@ -309,9 +309,21 @@ else
 				break
 				;;
 			"Show logs")
+				printf "\nNginX access [n]?\n Fail2Ban [f]?\n... "
+				read choice
 				printf "\n"
-				command="cat -n /var/log/nginx/access.log | grep -v -e '115.189..*..*' -e '192.168.1..*' -e '203.97.5.70'"
+				
+				if [ "$choice" = "n" ]; then
+					command="cat -n /var/log/nginx/access.log | grep -v -e '115.189..*..*' -e '192.168.1..*' -e '203.97.5.70'"
 				eval $command
+				elif [ "$choice" = "f" ]; then
+					command="cat -n /var/log/fail2ban.log
+				eval $command
+				else
+					printf "Something went wrong"
+					printf "\nchoice was = ${choice}\n"
+				fi
+				
 				printf "\nThe command was: ${command}"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
