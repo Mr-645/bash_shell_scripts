@@ -22,7 +22,7 @@ version=0.0.7
 
 COLUMNS=30
 PS3=$'\n'"Please enter the number corresponding to the operation of your choice: "
-options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "iptables" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Suspend" "Quit")
+options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "iptables" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Show logs" "Suspend" "Quit")
 
 if  [[ $1 = "--help" ]]; then
     printf "This script is for running pre-made bash commands\n"
@@ -305,6 +305,14 @@ else
 					printf "\nservice_choice = ${service_choice}\n"
 				fi
 				
+				printf "\nOperation '$REPLY: $opt' is complete\n"
+				break
+				;;
+			"Show logs")
+				printf "\n"
+				command="cat -n /var/log/nginx/access.log | grep -v -e '115.189..*..*' -e '192.168.1..*' -e '203.97.5.70'"
+				eval $command
+				printf "\nThe command was: ${command}"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
