@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script is for running pre-made bash commands
-version=0.0.6
+version=0.0.7
 
 # This is how you execute this script remotely: ssh user@remote_server "$(< localfile)"
 # Replace "localfile" with "Documents/task_select.sh"
@@ -22,7 +22,7 @@ version=0.0.6
 
 COLUMNS=30
 PS3=$'\n'"Please enter the number corresponding to the operation of your choice: "
-options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Suspend" "Quit")
+options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "iptables" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Suspend" "Quit")
 
 if  [[ $1 = "--help" ]]; then
     printf "This script is for running pre-made bash commands\n"
@@ -203,6 +203,14 @@ else
 				printf "\n"
 				ip addr
 				printf "\nThe command was: ip addr"
+				printf "\nOperation '$REPLY: $opt' is complete\n"
+				break
+				;;
+			"iptables")
+				printf "\n"
+				command="sudo iptables -L -v -n"
+				eval $command
+				printf "\nThe command was: ${command}"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
