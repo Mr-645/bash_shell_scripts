@@ -329,9 +329,24 @@ else
 				break
 				;;
 			"Suspend")
-				printf "\nGoing to sleep now\n"
-				printf "\nThe command was: sudo systemctl suspend"
-				sudo systemctl suspend
+				printf "\nNormal sleep/suspend [n]?\nSleep for 8 hours, then automatically wake up [8]?\n... "
+				read choice
+				printf "\n"
+				
+				if [ "$choice" = "n" ]; then
+					command="sudo systemctl suspend"
+					printf "\nGoing to sleep now until forced awake by button press."
+					eval $command
+				elif [ "$choice" = "8" ]; then
+					command="sudo rtcwake -m mem -s 28800"
+					printf "\nGoing to sleep now. Waking up in 8 hours."
+					eval $command
+				else
+					printf "Something went wrong"
+					printf "\nchoice was = ${choice}\n"
+				fi
+				
+				printf "\nThe command was: ${command}"
 				break
 				;;
 			"Quit")
