@@ -22,7 +22,7 @@ version=0.0.7
 
 COLUMNS=30
 PS3=$'\n'"Please enter the number corresponding to the operation of your choice: "
-options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "iptables" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Show logs" "Suspend" "Quit")
+options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "iptables" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Show logs" "Suspend/Sleep" "Quit")
 
 if  [[ $1 = "--help" ]]; then
     printf "This script is for running pre-made bash commands\n"
@@ -328,10 +328,9 @@ else
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
-			"Suspend")
+			"Suspend/sleep")
 				printf "\nNormal sleep/suspend [n]?\nSleep for 8 hours, then automatically wake up [8]?\n... "
 				read choice
-				printf "\n"
 				
 				if [ "$choice" = "n" ]; then
 					command="sudo systemctl suspend"
@@ -339,7 +338,7 @@ else
 					eval $command
 				elif [ "$choice" = "8" ]; then
 					command="sudo rtcwake -m mem -s 28800"
-					printf "\nGoing to sleep now. Waking up in 8 hours."
+					printf "\nGoing to sleep now. Waking up in 8 hours.\n"
 					eval $command
 				else
 					printf "Something went wrong"
