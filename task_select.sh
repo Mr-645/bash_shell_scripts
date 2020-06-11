@@ -328,7 +328,7 @@ else
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
-			"Suspend/sleep")
+			"Suspend/Sleep")
 				printf "\nNormal sleep/suspend [n]?\nSleep for 8 hours, then automatically wake up [8]?\n... "
 				read choice
 				
