@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script is for running pre-made bash commands
-version=0.0.7
+version=0.0.8
 
 # This is how you execute this script remotely: ssh user@remote_server "$(< localfile)"
 # Replace "localfile" with "Documents/task_select.sh"
@@ -22,7 +22,7 @@ version=0.0.7
 
 COLUMNS=30
 PS3=$'\n'"Please enter the number corresponding to the operation of your choice: "
-options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "iptables" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Show logs" "Suspend/Sleep" "Quit")
+options=("Find file" "Computer/Kernel info" "Devices" "Disc info" "un/Mount a device" "Apt update/upgrade" "Task manager" "Ports" "ip address" "iptables" "nmap" "Search apt repositories for a package" "Search for an installed package" "Find SOURCE FILES for an installed package" "list of installed packages" "Services" "Show logs" "Suspend/Sleep" "Quit")
 
 if  [[ $1 = "--help" ]]; then
     printf "This script is for running pre-made bash commands\n"
@@ -214,6 +214,32 @@ else
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
+			"nmap")
+				printf "\nNmap:\n- Quick scan [q]?\n- Intense scan [i]?\n- All TCP port scan [a]?\n... "
+				read choice
+				printf "\nWhat IP address/range... "
+				read ip_input
+				
+				if [ "$choice" = "q" ]; then
+						command="sudo nmap -sV -T4 -O -F --version-light ${ip_input}"
+						printf "\nThe command is: ${command}\n"
+						eval $command
+				elif [ "$choice" = "i" ]; then
+						command="sudo nmap -T4 -A -v ${ip_input}"
+						printf "\nThe command is: ${command}\n"
+						eval $command
+				elif [ "$choice" = "a" ]; then
+						command="sudo nmap -p 1-65535 -T4 -A -v ${ip_input}"
+						printf "\nThe command is: ${command}\n"
+						eval $command
+				else
+						printf "Something went wrong"
+						printf "\nchoice was = ${choice}\n"
+				fi
+
+				printf "\nThe command was: ${command}"
+				break
+				;;
 			"Search apt repositories for a package")
 				printf "\n"
 				printf "Enter name of package in repositories... \n"
@@ -329,20 +355,24 @@ else
 				break
 				;;
 			"Suspend/Sleep")
-				printf "\nNormal sleep/suspend [n]?\nSleep for 8 hours, then automatically wake up [8]?\n... "
+				printf "\nNormal sleep/suspend [n]?\nSleep for 'x' hours, then automatically wake up [x]?\n... "
 				read choice
 				
 				if [ "$choice" = "n" ]; then
 					command="sudo systemctl suspend"
 					printf "\nGoing to sleep now until forced awake by button press."
 					eval $command
-				elif [ "$choice" = "8" ]; then
-					command="sudo rtcwake -m mem -s 28800"
-					printf "\nGoing to sleep now. Waking up in 8 hours.\n"
+				elif [ "$choice" = "x" ]; then
+					printf "\nHow many hours?... "
+					read time
+					let "duration = $time * 60 * 60"
+					printf "\nSleep duration= ${duration} seconds"
+					command="sudo rtcwake -m mem -s ${duration}"
+					printf "\nGoing to sleep now. Waking up in ${time} hours.\n"
 					eval $command
 				else
 					printf "Something went wrong"
-					printf "\nchoice was = ${choice}\n"
+					printf "\nchoice was = ${choice}"
 				fi
 				
 				printf "\nThe command was: ${command}"
