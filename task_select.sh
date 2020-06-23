@@ -221,7 +221,7 @@ else
 				read ip_input
 				
 				if [ "$choice" = "q" ]; then
-						command="sudo nmap -sV -T4 -O -F --version-light ${ip_input}"
+						command="sudo nmap -sV -T4 -O -F -v --version-light ${ip_input}"
 						printf "\nThe command is: ${command}\n"
 						eval $command
 				elif [ "$choice" = "i" ]; then
