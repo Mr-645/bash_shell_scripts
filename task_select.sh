@@ -365,7 +365,8 @@ else
 				elif [ "$choice" = "x" ]; then
 					printf "\nHow many hours?... "
 					read time
-					let "duration = $time * 60 * 60"
+					#let "duration = $time * 60 * 60"
+					duration=`echo "${time} * 60 * 60" | bc | cut -d. -f1`
 					printf "\nSleep duration= ${duration} seconds"
 					command="sudo rtcwake -m mem -s ${duration}"
 					printf "\nGoing to sleep now. Waking up in ${time} hours.\n"
