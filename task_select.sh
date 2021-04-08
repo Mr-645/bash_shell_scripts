@@ -194,8 +194,8 @@ else
 				;;
 			"Ports")
 				printf "\n"
-				sudo netstat -tulpn
-				printf "\nThe command was: sudo netstat -tulpn"
+				sudo ss -tulpn
+				printf "\nThe command was: sudo ss -tulpn"
 				printf "\nOperation '$REPLY: $opt' is complete\n"
 				break
 				;;
